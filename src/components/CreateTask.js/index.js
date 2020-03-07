@@ -12,11 +12,21 @@ function CreateTask (props) {
     const [taskError, setTaskError] = useState(false);
     const [taskErrorMessage] = useState("Task is required!");
 
+    const resetErrors = () => {
+        setTaskError(false);
+    }
+
+    const resetForm = () => {
+        setTask("");
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         SetIsLoading(true);
+        resetErrors();
         if(!task){
-            setTaskError(true)
+            setTaskError(true);
+            SetIsLoading(false);
             return;
         }
     
@@ -29,6 +39,7 @@ function CreateTask (props) {
         createTaskRequest(data).then(response => {
           if (response.status === "success") {
             addTask(response.data); //update store with response
+            resetForm();
             SetIsLoading(false);
             notification.success({
               message: "Successful!",
