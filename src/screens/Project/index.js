@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom/";
 import { connect } from "react-redux";
-import { Button, notification } from 'antd';
+import { Button, notification, Table } from 'antd';
 import 'antd/dist/antd.css';
 import '../../App.css';
+import { addTask } from "../../redux/actions";
 import Navbar from "../../components/Navbar"
 
+//Request
+import createTaskRequest from "../../api/createTaskRequest";
+
 function Project(props){
-  const { project } = props
+  const { project, addTask } = props
   const [isLoading, SetIsLoading] = useState(false);
   const [task, setTask] = useState("");
   const [taskError, setTaskError] = useState(false);
@@ -26,6 +30,27 @@ function Project(props){
       projectId: project.id,
       projectName: project.name
     };
+
+    createTaskRequest(data).then(response => {
+      if (response.status === "success") {
+        addTask(response.data); //update store with response
+        SetIsLoading(false);
+        notification.success({
+          message: "Successful!",
+          description: (
+            <>
+              <b>
+                {response.data.task}
+              </b>
+              {" is created successfully."}
+            </>
+          )
+        });
+       
+      } else {
+        notification.error({ message: "Something went wrong" });
+      }
+    });
 
   }
   return(
@@ -66,12 +91,12 @@ function Project(props){
 }
 
 const mapStateToProps = (state,ownProps ) => {
-   let projectId = ownProps.match.params.id
-   return {
-     project: state.projects.list.filter(
-       project => project.id === parseInt(projectId)
-     )[0],
-     tasks: state.tasks.list
-   };
- }; 
-export default connect(mapStateToProps)(Project)
+  let projectId = ownProps.match.params.id
+  return {
+    project: state.projects.list.filter(
+      project => project.id === parseInt(projectId)
+    )[0],
+    tasks: state.tasks.list
+  };
+}; 
+export default connect(mapStateToProps, { addTask })(Project)
