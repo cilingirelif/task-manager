@@ -12,11 +12,15 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "remote-redux-devtools": "^0.5.16",
+    "remotedev-server": "^0.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "remotedev": "remotedev --hostname=localhost --port=8000",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
