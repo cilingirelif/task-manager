@@ -23,8 +23,9 @@ function Project(props){
   const { Option } = Select;
 
   const handleTag = (record) => {
-    setVisible(true)
-    setTaskId(record.id)
+    setVisible(true);
+    setTaskId(record.id);
+    setSelectValue(record.status);
   }
 
   const handleTableChange = (pagination, filters, sorter) => {
@@ -114,7 +115,7 @@ function Project(props){
               onOk={handleUpdateTaskStatus}
               onCancel={() => setVisible(false)}
             >
-                <Select style={{ width: 120 }} onChange={handleSelectChange}>
+                <Select style={{ width: 120 }} value={selectValue} onChange={handleSelectChange}>
                    <Option value="Todo">Todo</Option>
                    <Option value="Done">Done</Option>
                 </Select>
