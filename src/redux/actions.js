@@ -1,5 +1,6 @@
 import { ADD_PROJECT} from "./actionTypes";
 import { ADD_TASK} from "./actionTypes";
+import { UPDATE_TASK_STATUS} from "./actionTypes";
 
 let nextProjectId = 0;
 let nextTaskId = 0;
@@ -21,6 +22,14 @@ export const addTask = content => ({
     projectId : content.projectId,
     projectName : content.projectName,
     status:"Todo"
+  }
+});
+
+export const updateTaskStatus = content => ({
+  type: UPDATE_TASK_STATUS,
+  payload: {
+    id: content.id,
+    status:content.status
   }
 });
 

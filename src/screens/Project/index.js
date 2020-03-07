@@ -1,23 +1,40 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom/";
 import { connect } from "react-redux";
-import { Button, notification, Table, Tag } from 'antd';
+import { Button, notification, Table, Tag, Modal,Select } from 'antd';
 import 'antd/dist/antd.css';
 import '../../App.css';
-import { addTask } from "../../redux/actions";
+import { updateTaskStatus } from "../../redux/actions";
 import Navbar from "../../components/Navbar"
 
 //Request
-import createTaskRequest from "../../api/createTaskRequest";
+import updateTaskStatusRequest from "../../api/updateTaskStatusRequest";
+import CreateTask from "../../components/CreateTask.js";
 
 function Project(props){
-  const { project, addTask, tasks } = props
-  const [isLoading, SetIsLoading] = useState(false);
-  const [task, setTask] = useState("");
-  const [taskError, setTaskError] = useState(false);
-  const [taskErrorMessage] = useState("Task is required!");
+  const { project, tasks, updateTaskStatus } = props
+
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSorteredInfo] = useState({});
+  const [visible, setVisible] = useState(false);
+  const [selectValue, setSelectValue] = useState("");
+  const [taskId, setTaskId] = useState("");
+
+  const { Option } = Select;
+
+  const handleTag = (record) => {
+    setVisible(true)
+    setTaskId(record.id)
+  }
+
+  const handleTableChange = (pagination, filters, sorter) => {
+    setFilteredInfo(filters)
+    setSorteredInfo(sorter)
+  };
+
+  const handleSelectChange = (value)=>{
+    setSelectValue(value)
+  }
 
   let columns = [
     {
@@ -32,18 +49,21 @@ function Project(props){
       title: 'Task',
       dataIndex: 'task',
       key: 'task',
-      sorter: (a, b) => a.task.length - b.task.length,
-        sortOrder: sortedInfo.columnKey === 'task' && sortedInfo.order,
-        ellipsis: true,
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: status => (
+      filters: [
+        { text: 'Todo', value: 'Todo' },
+        { text: 'Done', value: 'Done' },
+      ],
+      filteredValue: filteredInfo.status || null,
+      onFilter: (value, record) => record.status.includes(value),
+      render: (status,record) => (
         <span>
           {
-            <Tag onClick={()=> alert(1)} color={status ==="Todo" ? 'volcano' : 'green'} key={status}>
+            <Tag onClick={()=>handleTag(record)} color={status ==="Todo" ? 'volcano' : 'green'} key={status}>
               {status}
             </Tag>
           }
@@ -51,39 +71,22 @@ function Project(props){
       ),
     },
   ];
-  const handleChange = (pagination, filters, sorter) => {
-    console.log('Various parameters', pagination, filters, sorter);
-    setFilteredInfo(filters)
-    setSorteredInfo(sorter)
- 
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    SetIsLoading(true);
-    if(!task){
-        setTaskError(true)
-        return;
-    }
-
+  const handleUpdateTaskStatus = () => {
+    setVisible(false)
     const data = {
-      task,
-      projectId: project.id,
-      projectName: project.name
-    };
-
-    createTaskRequest(data).then(response => {
+      id: taskId,
+      status: selectValue
+    }
+    
+    updateTaskStatusRequest(data).then(response => {
       if (response.status === "success") {
-        addTask(response.data); //update store with response
-        SetIsLoading(false);
+        updateTaskStatus(response.data); //update store with response
         notification.success({
           message: "Successful!",
           description: (
             <>
-              <b>
-                {response.data.task}
-              </b>
-              {" is created successfully."}
+              {"Updated successfully."}
             </>
           )
         });
@@ -92,8 +95,9 @@ function Project(props){
         notification.error({ message: "Something went wrong" });
       }
     });
-
   }
+
+  
   return(
     <div>
       <Navbar />
@@ -102,31 +106,19 @@ function Project(props){
             {project &&
               <div className="title">{project.name}</div>
             }
-            <div>Create task</div>
-            <form>
-              <div className="flex row align-center">
-                {taskError &&
-                    <div className="error text-align-end width100">
-                        {taskErrorMessage}
-                    </div>
-                }
-              </div>
-
-              <div className="flex row align-center mb-20">
-                <div className="label">Task</div>
-                <input
-                    className="input_text"
-                    type="text"
-                    placeholder=""
-                    name="task"
-                    value={task}
-                    onChange={e => setTask(e.target.value)}
-                />
-              </div>
-              <Button type="primary" loading={isLoading} onClick={handleSubmit}>Create</Button>
-            </form>
-
-            <Table rowKey={"id"} columns={columns} dataSource={tasks} onChange={handleChange} />
+            <CreateTask project={project} />
+            <Table rowKey={"id"} columns={columns} dataSource={tasks} onChange={handleTableChange} />
+            <Modal
+              title="Change status"
+              visible={visible}
+              onOk={handleUpdateTaskStatus}
+              onCancel={() => setVisible(false)}
+            >
+                <Select style={{ width: 120 }} onChange={handleSelectChange}>
+                   <Option value="Todo">Todo</Option>
+                   <Option value="Done">Done</Option>
+                </Select>
+            </Modal>
         </div>
       </div>
     </div>
@@ -142,4 +134,4 @@ const mapStateToProps = (state,ownProps ) => {
     tasks: state.tasks.list
   };
 }; 
-export default connect(mapStateToProps, { addTask })(Project)
+export default connect(mapStateToProps, {  updateTaskStatus })(Project)

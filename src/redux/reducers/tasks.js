@@ -1,5 +1,6 @@
 
 import { ADD_TASK } from "../actionTypes";
+import { UPDATE_TASK_STATUS} from "../actionTypes";
 
 const initialState = {
     list: []   
@@ -11,6 +12,18 @@ const tasks = (state = initialState, action) => {
       return {
         ...state,
         list: [...state.list, action.payload]
+      };
+    }
+    case UPDATE_TASK_STATUS: {
+      return {
+        list: state.list.map(item => {
+          if (item.id === action.payload.id) {
+            item.status = action.payload.status;
+            return item;
+          }
+          return item;
+        }),
+       
       };
     }
     default: {
