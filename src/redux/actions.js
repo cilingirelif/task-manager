@@ -19,7 +19,8 @@ export const addTask = content => ({
     id: ++nextTaskId,
     task : content.task,
     projectId : content.projectId,
-    projectName : content.projectName
+    projectName : content.projectName,
+    status:"Todo"
   }
 });
 

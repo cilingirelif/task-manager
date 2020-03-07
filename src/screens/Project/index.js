@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom/";
 import { connect } from "react-redux";
-import { Button, notification, Table } from 'antd';
+import { Button, notification, Table, Tag } from 'antd';
 import 'antd/dist/antd.css';
 import '../../App.css';
 import { addTask } from "../../redux/actions";
@@ -11,12 +11,53 @@ import Navbar from "../../components/Navbar"
 import createTaskRequest from "../../api/createTaskRequest";
 
 function Project(props){
-  const { project, addTask } = props
+  const { project, addTask, tasks } = props
   const [isLoading, SetIsLoading] = useState(false);
   const [task, setTask] = useState("");
   const [taskError, setTaskError] = useState(false);
   const [taskErrorMessage] = useState("Task is required!");
-  
+  const [filteredInfo, setFilteredInfo] = useState({});
+  const [sortedInfo, setSorteredInfo] = useState({});
+
+  let columns = [
+    {
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
+      sorter: (a, b) => a.id - b.id,
+      sortOrder: sortedInfo.columnKey === 'id' && sortedInfo.order,
+      ellipsis: true,
+    },
+    {
+      title: 'Task',
+      dataIndex: 'task',
+      key: 'task',
+      sorter: (a, b) => a.task.length - b.task.length,
+        sortOrder: sortedInfo.columnKey === 'task' && sortedInfo.order,
+        ellipsis: true,
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: status => (
+        <span>
+          {
+            <Tag onClick={()=> alert(1)} color={status ==="Todo" ? 'volcano' : 'green'} key={status}>
+              {status}
+            </Tag>
+          }
+        </span>
+      ),
+    },
+  ];
+  const handleChange = (pagination, filters, sorter) => {
+    console.log('Various parameters', pagination, filters, sorter);
+    setFilteredInfo(filters)
+    setSorteredInfo(sorter)
+ 
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     SetIsLoading(true);
@@ -84,6 +125,8 @@ function Project(props){
               </div>
               <Button type="primary" loading={isLoading} onClick={handleSubmit}>Create</Button>
             </form>
+
+            <Table rowKey={"id"} columns={columns} dataSource={tasks} onChange={handleChange} />
         </div>
       </div>
     </div>
