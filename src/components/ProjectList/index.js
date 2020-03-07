@@ -15,7 +15,7 @@ const ProjectList =({ projects }) => (
                   <Link key={i} to={`/project/${project.id}/`}>
                     <div  
                       style={{width:`200px`, height:`auto`, border:`1px solid black`,margin : `0 20px`}}>
-                        {project.content.projectName}
+                        {project.name}
                     </div>
                   </Link>
                 )})
@@ -33,7 +33,7 @@ const ProjectList =({ projects }) => (
 
 const mapStateToProps = state => {
     return {
-      projects : state.projects.projects,
+      projects : state.projects.list,
     };
   };
 export default connect(mapStateToProps)(ProjectList)

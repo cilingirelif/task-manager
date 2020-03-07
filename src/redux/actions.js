@@ -8,7 +8,8 @@ export const addProject = content => ({
   type: ADD_PROJECT,
   payload: {
     id: ++nextProjectId,
-    content
+    name: content.projectName,
+    description : content.description
   }
 })
  
