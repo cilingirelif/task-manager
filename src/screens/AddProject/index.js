@@ -5,14 +5,18 @@ import '../../App.css';
 import {
   HomeOutlined,UserOutlined,PlusOutlined
 } from '@ant-design/icons';
-import { Menu, Button } from 'antd';
+import { Menu, Button, notification } from 'antd';
 import { connect } from "react-redux";
 import { addProject } from "../../redux/actions";
 import Navbar from "../../components/Navbar"
+
+import history from "../../history";
+import createProjectRequest from "../../api/createProjectRequest";
+
 function AddProject(props){
   const { addProject } = props
-  console.log(props)
 
+  const [isLoading, SetIsLoading] = useState(false);
   const [projectName, setProjectName] = useState("");
   const [projectNameError, setProjectNameError] = useState(false);
   const [projectNameErrorMessage] = useState("Project name is required!");
@@ -20,22 +24,63 @@ function AddProject(props){
   const [descriptionError, setDescriptionError] = useState(false);
   const [descriptionErrorMessage] = useState("Description is required!");
 
+  const resetErrors = () => {
+    setProjectNameError(false);
+    setDescriptionError(false);
+  };
+
+  const resetForm = () => {
+    setProjectName("");
+    setDescription("");
+    resetErrors();
+  };
+
+
   const handleSubmit = e => {
     e.preventDefault();
-    setProjectNameError(false);
-  
+    SetIsLoading(true);
+    resetErrors();
+
     if (!projectName) {
       setProjectNameError(true);
     }
     if (!description) {
       setDescriptionError(true);
     }
-    if (projectName !== "" && description !== "") {
-      const data={
-        projectName,description
-      }
-      addProject(data)
+    if (!projectName || !description) {
+      SetIsLoading(false);
+      return;
     }
+
+    const data = {
+      projectName,
+      description
+    };
+
+    createProjectRequest(data).then(response => {
+      if (response.status === "success") {
+        addProject(response.data); //update store with repsonse
+        resetForm();
+        SetIsLoading(false);
+        notification.success({
+          message: "Successful!",
+          description: (
+            <>
+              <b>
+                {response.data.projectName}
+                {" project"}
+              </b>
+              {", created successfully"}
+            </>
+          )
+        });
+        history.push("home");
+      } else {
+        notification.error({ message: "Something went wrong" });
+      }
+    });
+
+
   }
   return(
     <div>
@@ -86,7 +131,7 @@ function AddProject(props){
                 />
               </div>
 
-              <Button type="primary" onClick={handleSubmit}>Save</Button>
+              <Button type="primary" loading={isLoading} onClick={handleSubmit}>Save</Button>
             
             </form>
           </div>
