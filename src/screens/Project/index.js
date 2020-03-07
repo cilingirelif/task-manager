@@ -131,7 +131,9 @@ const mapStateToProps = (state,ownProps ) => {
     project: state.projects.list.filter(
       project => project.id === parseInt(projectId)
     )[0],
-    tasks: state.tasks.list
+    tasks: state.tasks.list.filter(
+      task => task.projectId === parseInt(projectId)
+    )
   };
 }; 
 export default connect(mapStateToProps, {  updateTaskStatus })(Project)
