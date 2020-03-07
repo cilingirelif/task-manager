@@ -11,8 +11,14 @@ const ProjectList =({ projects }) => (
             {
               projects && projects.length 
                 ? projects.map((project,i) => {
-                  return <div key={i} style={{width:`200px`, height:`auto`, border:`1px solid black`,margin : `0 20px`}}>{project.content.projectName}</div>
-                })
+                  return (
+                  <Link key={i} to={`/project/${project.id}/`}>
+                    <div  
+                      style={{width:`200px`, height:`auto`, border:`1px solid black`,margin : `0 20px`}}>
+                        {project.content.projectName}
+                    </div>
+                  </Link>
+                )})
               : <div>
                   <div>You have no projects</div>
                   <Link to="add-project">Add a project</Link>
@@ -26,7 +32,6 @@ const ProjectList =({ projects }) => (
 )
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
       projects : state.projects.projects,
     };
