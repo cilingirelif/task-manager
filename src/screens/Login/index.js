@@ -40,7 +40,8 @@ function Login(){
             <div className="wrap-login flex column">
             <Row>
                 <Col  span={24} xl={24}>
-                <div className="title">Task Manager</div>
+                <div className="title">TAMA</div>
+                <div className="line mb-20"></div>
                 <form >
                     <div className="flex row align-center">
                           <div className="error text-align-end width100">
