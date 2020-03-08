@@ -1,4 +1,4 @@
-const updateTaskStatusRequest = data => {
+const updateTaskRequest = data => {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve({
@@ -9,5 +9,4 @@ const updateTaskStatusRequest = data => {
     });
   };
   
-  export default updateTaskStatusRequest;
-  
+  export default updateTaskRequest;

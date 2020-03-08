@@ -1,6 +1,4 @@
-import { ADD_PROJECT} from "./actionTypes";
-import { ADD_TASK} from "./actionTypes";
-import { UPDATE_TASK_STATUS} from "./actionTypes";
+import { ADD_PROJECT, ADD_TASK, UPDATE_TASK, DELETE_TASK } from "./actionTypes";
 
 export const addProject = content => ({
   type: ADD_PROJECT,
@@ -20,12 +18,21 @@ export const addTask = content => ({
   }
 });
 
-export const updateTaskStatus = content => ({
-  type: UPDATE_TASK_STATUS,
+export const updateTask = content => ({
+  type: UPDATE_TASK,
   payload: {
     id: content.id,
-    status:content.status
+    status: content.status,
+    task: content.task
   }
 });
 
+export const deleteTask = content => {
+  return {
+    type: DELETE_TASK,
+    payload: {
+      id: content.id
+    }
+  };
+};
 

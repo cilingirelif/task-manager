@@ -1,6 +1,4 @@
-
-import { ADD_TASK } from "../actionTypes";
-import { UPDATE_TASK_STATUS} from "../actionTypes";
+import { ADD_TASK, UPDATE_TASK, DELETE_TASK } from "../actionTypes";
 
 const initialState = {
     list: []   
@@ -17,16 +15,22 @@ const tasks = (state = initialState, action) => {
         list: [...state.list, { ...action.payload, id: lastTaskId + 1 }]
       };
     }
-    case UPDATE_TASK_STATUS: {
+    case UPDATE_TASK: {
       return {
         list: state.list.map(item => {
           if (item.id === action.payload.id) {
             item.status = action.payload.status;
+            item.task = action.payload.task;
             return item;
           }
           return item;
         }),
        
+      };
+    }
+    case DELETE_TASK: {
+      return {
+        list: state.list.filter(item => item.id !== action.payload.id)
       };
     }
     default: {
