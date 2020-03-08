@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import 'antd/dist/antd.css';
-import '../../App.css';
+import "antd/dist/antd.css";
+import "../../App.css";
 
-import { Button, notification, Row, Col} from 'antd';
+import { Button, notification, Row, Col, Form } from "antd";
 import { connect } from "react-redux";
 import { addProject } from "../../redux/actions";
-import Navbar from "../../components/Navbar"
+import Navbar from "../../components/Navbar";
 
 import history from "../../history";
 import createProjectRequest from "../../api/createProjectRequest";
 
-function AddProject(props){
-  const { addProject } = props
+function AddProject(props) {
+  const { addProject } = props;
 
   const [isLoading, SetIsLoading] = useState(false);
   const [projectName, setProjectName] = useState("");
@@ -31,7 +31,6 @@ function AddProject(props){
     setDescription("");
     resetErrors();
   };
-
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -76,68 +75,69 @@ function AddProject(props){
         notification.error({ message: "Something went wrong" });
       }
     });
-
-
-  }
-  return(
+  };
+  return (
     <div>
-
       <Navbar />
       <div className="container">
         <div className="wrapper">
           <Row>
-            
-              <Col  span={24} xl={24}>
-                <div className="title">Add project</div>
-                  <div className="line mb-20"></div>
-                    <form className="add-project-form">
-                        <div className="flex row align-center">
-                          {projectNameError &&
-                            <div className="error text-align-end width100">
-                              {projectNameErrorMessage}
-                            </div>
-                          }
-                        </div>
-                        
-                        <div className="flex row align-center mb-20">
-                          <div className="label">Project Name</div>
-                          <input
-                              className="input_text"
-                              type="text"
-                              placeholder=""
-                              name="project_name"
-                              value={projectName}
-                              onChange={e => setProjectName(e.target.value)}
-                          />
-                        </div>
-                        <div className="flex row align-center">
-                          {descriptionError &&
-                            <div className="error text-align-end width100">
-                              {descriptionErrorMessage}
-                            </div>
-                          }
-                        </div>
-                        <div className="flex row align-center mb-20">
-                          <div className="label">Description</div>
-                          <textarea
-                            rows="6"
-                            className="textarea_text"
-                            type="text"
-                            placeholder=""
-                            name="description"
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
-                          />
-                        </div>
-                        <div className="flex justify-end">
-                          <Button type="primary" loading={isLoading} onClick={handleSubmit}>Save</Button>
-                        </div>
-                      </form>
-                    </Col>
-                </Row>
-          </div>
+            <Col span={24} xl={24}>
+              <div className="title">Add project</div>
+              <div className="line mb-20"></div>
+              <Form layout="vertical" className="add-project-form">
+                <Form.Item label="Project Name">
+                  <input
+                    className="input_text"
+                    type="text"
+                    placeholder=""
+                    name="project_name"
+                    value={projectName}
+                    onChange={e => setProjectName(e.target.value)}
+                  />
+                  <div className="flex row align-center">
+                    {projectNameError && (
+                      <div className="error text-align-end width100">
+                        {projectNameErrorMessage}
+                      </div>
+                    )}
+                  </div>
+                </Form.Item>
+
+                <Form.Item label="Description">
+                  <textarea
+                    rows="6"
+                    className="textarea_text"
+                    type="text"
+                    placeholder=""
+                    name="description"
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
+                  />
+                  <div className="flex row align-center">
+                    {descriptionError && (
+                      <div className="error text-align-end width100">
+                        {descriptionErrorMessage}
+                      </div>
+                    )}
+                  </div>
+                </Form.Item>
+
+                <div className="flex justify-end">
+                  <Button
+                    type="primary"
+                    loading={isLoading}
+                    onClick={handleSubmit}
+                  >
+                    Save
+                  </Button>
+                </div>
+              </Form>
+            </Col>
+          </Row>
         </div>
       </div>
-    )
+    </div>
+  );
 }
-export default connect(null,{ addProject })(AddProject)
+export default connect(null, { addProject })(AddProject);

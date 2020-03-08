@@ -173,6 +173,9 @@
   .add-project-form{
     width: 100%;
   }
+  .wrapper {
+    margin: 1rem 2rem 0;
+  }
 }
 
 @media screen and (max-width: 500px) {
