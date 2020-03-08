@@ -86,8 +86,8 @@ function AddProject(props){
       <div className="container">
         <div className="wrapper">
           <Row>
-            <div className=" flex column">
-              <Col  span={24}>
+            
+              <Col  span={24} xl={24}>
                 <div className="title">Add project</div>
                   <div className="line mb-20"></div>
                     <form className="add-project-form">
@@ -134,7 +134,6 @@ function AddProject(props){
                         </div>
                       </form>
                     </Col>
-                  </div>
                 </Row>
           </div>
         </div>
