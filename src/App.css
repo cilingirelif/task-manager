@@ -29,8 +29,10 @@
   padding: 35px 130px 35px 130px;
 }
 .title{
-  font-size: 40px;
-  margin-bottom: 30px;
+  font-size: 30px;
+  margin-bottom: 20px;
+  line-height: 40px;
+  text-transform: uppercase;
 }
 .flex{
   display: flex
@@ -47,14 +49,18 @@
 .justify-center{
   justify-content: center;
 }
+.justify-end{
+  justify-content: flex-end;
+}
 .label{
   width:100px;
   text-align: left;
+  margin-right: 10px;
 }
 .textarea_text{ 
   border: 1px solid #dfe2e6;
   width: 100%;
-  padding-left: 40px;
+  padding-left: 20px;
 }
 .input_text{
   border: 1px solid #dfe2e6;
@@ -124,6 +130,35 @@
 .link:hover{
   color: rgb(101, 153, 153);
   text-decoration: underline;
+}
+.line{
+  width: 115px;
+  height: 5px;
+  background: rgb(101, 153, 153);
+}
+.add-project-form{
+  width: 700px;
+  margin-top: 40px;
+}
+::-webkit-input-placeholder {
+  /* Edge */
+  color: #c2c2c2;
+}
+:-ms-input-placeholder {
+  /* Internet Explorer */
+  color: #c2c2c2;
+}
+::placeholder {
+  color: #c2c2c2;
+}
+:focus {
+  outline: 0;
+}
+:-webkit-autofill,
+:-webkit-autofill:hover,
+:-webkit-autofill:focus,
+:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
 /*MEDIA QUERIES*/
