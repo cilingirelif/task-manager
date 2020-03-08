@@ -169,6 +169,12 @@
   }
 }
 
+@media screen and (max-width: 820px) {
+  .add-project-form{
+    width: 100%;
+  }
+}
+
 /* ANTD STYLE */
 .ant-menu-horizontal {
   padding: 0 4rem !important;
