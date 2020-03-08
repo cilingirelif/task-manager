@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Button, notification } from 'antd';
+import { Button, notification, Form, Input } from "antd";
+import { ArrowRightOutlined } from "@ant-design/icons";
 
 import createTaskRequest from "../../api/createTaskRequest";
 import { addTask } from "../../redux/actions";
-
+import "./createTask.css";
 function CreateTask (props) {
     const { project, addTask } = props
     const [isLoading, SetIsLoading] = useState(false);
@@ -62,28 +63,35 @@ function CreateTask (props) {
 
     return(
         <>
-        <div>Create task</div>
-        <form>
-            <div className="flex row align-center">
-                {taskError &&
-                  <div className="error text-align-end width100">
-                      {taskErrorMessage}
-                  </div>
-                }
-            </div>
-            <div className="flex row align-center mb-20">
-              <div className="label">Task</div>
-              <input
-                  className="input_text"
-                  type="text"
-                  placeholder=""
-                  name="task"
-                  value={task}
-                  onChange={e => setTask(e.target.value)}
-              />
-            </div>
-            <Button type="primary" loading={isLoading} onClick={handleSubmit}>Create</Button>
-        </form>
+        <Form layout="inline" className="create-task-form">
+        <Input.TextArea
+          className="create-task-input"
+          type="text"
+          placeholder="Create new task"
+          name="task"
+          autoSize
+          value={task}
+          onChange={e => setTask(e.target.value)}
+          onPressEnter={handleSubmit}
+          autoFocus
+        />
+
+        <Button
+          className="create-task-button"
+          type="primary"
+          htmlType="submit"
+          icon={<ArrowRightOutlined />}
+          size={"large"}
+          loading={isLoading}
+          onClick={handleSubmit}
+        />
+
+        {taskError && (
+          <div className="error text-align-end width100">
+            {taskErrorMessage}
+          </div>
+        )}
+      </Form>
         </>
     )
 }

@@ -1,0 +1,46 @@
+.create-task-form {
+    display: flex;
+    width: 100%;
+    margin: 100px 0 50px 0;
+}
+.create-task-input {
+  border-color: #659999;
+  color: #659999;
+  min-height: 40px !important;
+  margin: 0 10px 0 0;
+  flex: 1;
+  line-height: 2 !important;
+}
+
+.create-task-input:hover {
+  border-color: #598686;
+  outline: none !important;
+}
+.create-task-input:focus {
+  border-color: #598686;
+  outline: none !important;
+  box-shadow: none;
+}
+  
+.create-task-input:active {
+  outline: none !important;
+}
+
+.create-task-button {
+  background-color: #659999;
+  border: 0px;
+  outline: none;
+}
+
+.create-task-button:hover {
+  background-color: #5f8b8b;
+  outline: none;
+}
+
+.create-task-button:active {
+  background-color: #659999;
+  outline: none;
+}
+.create-task-button:focus {
+  background-color: #659999;
+}
