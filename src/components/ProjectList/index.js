@@ -4,31 +4,37 @@ import { Row, Col } from 'antd';
 import { Link } from "react-router-dom/";
 
 const ProjectList =({ projects }) => (
-
-    <Row>
-        <Col span={24}>
-          <div className="flex row" style={{margin : `4rem 10rem 0`}}>
-            {
-              projects && projects.length 
-                ? projects.map((project,i) => {
-                  return (
-                  <Link key={i} to={`/project/${project.id}/`}>
-                    <div  
-                      style={{width:`200px`, height:`auto`, border:`1px solid black`,margin : `0 20px`}}>
+  <>
+    <div className="wrapper">
+      <Row className="width100">
+        {
+          projects && projects.length 
+            ? projects.map((project,i) => {
+              return (
+                <Col  
+                    key={i}  
+                    xs={24}
+                    sm={24}
+                    md={12}
+                    lg={8}
+                    xl={8}
+                    xxl={6}
+                    span={6}>
+                  <Link to={`/project/${project.id}/`}>
+                    <div  className="box">
                         {project.name}
                     </div>
                   </Link>
-                )})
-              : <div>
-                  <div>You have no projects</div>
-                  <Link to="add-project">Add a project</Link>
-                </div>
-            } 
-          </div>
-        
-        </Col>
-    </Row>
-
+                </Col>
+              )})
+            : <div className="flex column">
+                <div>You have no projects</div>
+                <Link className="link" to="add-project">Add a project</Link>
+              </div>
+        } 
+      </Row>
+    </div>
+  </>
 )
 
 const mapStateToProps = state => {
