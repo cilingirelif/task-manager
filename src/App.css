@@ -115,10 +115,12 @@
   align-items: center;
   color: #fff;
   font-weight: 700;
-  text-transform: capitalize;
+  text-transform: capitalize !important;
   font-size: 24px;
   line-height: 28px;
   word-break: break-word;
+  text-align: left;
+  padding: 30px;
 }
 .box:hover {
   box-shadow: 0 0 20px rgba(33,33,33,.2); 
