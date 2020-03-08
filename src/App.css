@@ -196,3 +196,10 @@
   background-color: #659999!important;
   border-color: #659999!important;
 }
+.ant-pagination-item-active,
+.ant-pagination-item-active a,
+.ant-pagination-item-active:focus a,
+.ant-pagination-item-active:hover a {
+  border-color: #659999 !important;
+  color: #659999 !important;
+}
