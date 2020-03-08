@@ -175,6 +175,11 @@
   }
 }
 
+@media screen and (max-width: 500px) {
+  .wrap-login{
+    padding: 35px 20px 35px 20px;
+  }
+}
 /* ANTD STYLE */
 .ant-menu-horizontal {
   padding: 0 4rem !important;

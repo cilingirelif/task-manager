@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import 'antd/dist/antd.css';
 import '../../App.css';
 import history from "../../history";
+import { Row, Col } from "antd";
 
 function Login(){
     const [email, setEmail] = useState("");
@@ -37,6 +38,8 @@ function Login(){
     <div className="container">    
         <div className="login_container" >
             <div className="wrap-login flex column">
+            <Row>
+                <Col  span={24} xl={24}>
                 <div className="title">Task Manager</div>
                 <form >
                     <div className="flex row align-center">
@@ -81,9 +84,11 @@ function Login(){
                     </div>
            
                 </form>
-              
+                </Col>
+        </Row>
             </div>
         </div>
+       
     </div>)
 
 }
