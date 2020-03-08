@@ -9,9 +9,12 @@ const initialState = {
 const tasks = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TASK: {
+      let lastTaskId = 0;
+      if (state.list.length > 0)
+        lastTaskId = state.list[state.list.length - 1].id;
       return {
         ...state,
-        list: [...state.list, action.payload]
+        list: [...state.list, { ...action.payload, id: lastTaskId + 1 }]
       };
     }
     case UPDATE_TASK_STATUS: {
