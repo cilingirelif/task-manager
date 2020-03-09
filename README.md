@@ -6,6 +6,11 @@
 ✔️Create task
 ✔️Update task status
 ✔️Delete task
+✔️Edit task
+✔️Filter task
+
+https://ta-ma.netlify.com/
+
 
 #### Available Scripts
 
